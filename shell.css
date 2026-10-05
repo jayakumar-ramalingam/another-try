@@ -12,8 +12,8 @@ html { scroll-padding-top: calc(var(--header-height) + 90px); }
 .header .primary a:hover, .header .primary a[aria-current="page"] { color: #145c4c; border-bottom-color: #145c4c; }
 .header a:focus-visible { outline: 3px solid #926320; outline-offset: -3px; }
 .page-index { position: sticky; top: var(--header-height); z-index: 20; background: #fff; flex-wrap: nowrap; overflow-x: auto; gap: 24px; padding: 0; scrollbar-width: thin; }
-.page-index a { flex: 0 0 auto; padding: 17px 0 14px; border-bottom: 3px solid transparent; }
-.page-index a[aria-current="location"] { color: #145c4c; font-weight: 700; border-bottom-color: #926320; }
+.page-index a { flex: 0 0 auto; padding: 17px 0 14px; border-bottom: 3px solid transparent; font-weight: 600; }
+.page-index a[aria-current="location"] { color: #145c4c; border-bottom-color: #926320; }
 .page-index a:focus-visible { outline-offset: -3px; }
 main.wrap { width: min(1200px, calc(100% - 64px)); }
 .profile-refresh { background: #fff; }

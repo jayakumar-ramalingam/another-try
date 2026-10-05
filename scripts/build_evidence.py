@@ -85,7 +85,7 @@ def facts(*items):
 
 
 def page(slug, title, intro, sections, body, home=False):
-    nav = '<a href="index.html">Home</a><a href="about.html">About</a>' + ''.join(f'<a href="{name}.html"' + (' aria-current="page"' if name == slug else '') + f'>{esc(label)}</a>' for name, label in PAGES)
+    nav = '<a href="index.html">Home</a><a href="about.html">About</a>' + ''.join(f'<a href="{name}.html"' + (' aria-current="page"' if name == slug else '') + f'>{esc("Innovation" if name == "innovation" else label)}</a>' for name, label in PAGES)
     jump = '<nav class="page-index" aria-label="On this page">' + ''.join(f'<a href="#{id}">{label}</a>' for id, label in sections) + '</nav>' if sections else ''
     heading = '' if home else f'<div class="intro"><p class="eyebrow">Jayakumar Ramalingam / Professional portfolio</p><h1>{esc(title)}</h1><p>{intro}</p></div>'
     index = [p[0] for p in PAGES].index(slug) if slug in dict(PAGES) else -1
@@ -99,7 +99,7 @@ def page(slug, title, intro, sections, body, home=False):
 <meta name="description" content="{esc(intro)}"><link rel="canonical" href="https://jrtechfolio.com/{slug}.html">
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)} | Jayakumar Ramalingam"><meta property="og:description" content="{esc(intro)}">
 <meta property="og:url" content="https://jrtechfolio.com/{slug}.html"><meta property="og:image" content="https://jrtechfolio.com/assets/profile/jay-full.jpeg">
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="evidence.css?v=20261005g"><link rel="stylesheet" href="shell.css?v=20261005"><script defer src="navigation.js?v=20261005"></script><script defer src="evidence.js?v=20261005d"></script></head>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="evidence.css?v=20261005g"><link rel="stylesheet" href="shell.css?v=20261005b"><script defer src="navigation.js?v=20261005b"></script><script defer src="evidence.js?v=20261005d"></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap"><div class="identity"><a class="brand" href="index.html"><span class="monogram" aria-hidden="true">JR</span>Jayakumar Ramalingam</a><small>Cloud architecture &amp; intelligent systems</small></div><nav class="primary" aria-label="Primary navigation">{nav}</nav></div></header>
 <main id="main" class="wrap">{heading}{jump}{body}{onward}</main>
 <footer class="footer"><div class="wrap"><p>&copy; 2026 Jayakumar Ramalingam</p><div><a href="https://www.linkedin.com/in/jayakumarramalingam/">LinkedIn</a><a href="https://orcid.org/0009-0007-9823-3097">ORCID</a><a href="https://github.com/jayakumar-ramalingam/">GitHub</a></div></div></footer>

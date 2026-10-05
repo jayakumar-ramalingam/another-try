@@ -13,7 +13,8 @@
   if (!links.length) return;
   let pending = false;
   const updateSection = () => {
-    const offset = header.offsetHeight + document.querySelector('.page-index').offsetHeight + 36;
+    const scrollPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+    const offset = Math.max(header.offsetHeight + document.querySelector('.page-index').offsetHeight + 24, scrollPadding + 2);
     let active = 0;
     sections.forEach((section, index) => {
       if (section && section.getBoundingClientRect().top <= offset) active = index;
