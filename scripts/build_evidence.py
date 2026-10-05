@@ -1,5 +1,6 @@
 """Build the static evidence pages. Run from any directory with Python and Pillow."""
 from html import escape
+import json
 from pathlib import Path
 from PIL import Image
 
@@ -22,15 +23,18 @@ def image(src, alt, eager=False):
     return f'<img src="{esc(src)}" alt="{esc(alt)}" width="{width}" height="{height}" loading="{"eager" if eager else "lazy"}" decoding="async">'
 
 
-def evidence(title, issuer, caption, src, original=None, extra=(), photo=False):
+def evidence(title, issuer, caption, src, original=None, extra=(), photo=False, gallery=()):
     original = original or src
+    gallery_items = [{'src': src, 'href': original, 'title': title}]
+    gallery_items.extend({'src': item_src, 'href': item_src, 'title': item_title} for item_title, item_src in gallery)
+    gallery_data = f' data-gallery="{esc(json.dumps(gallery_items))}"' if gallery else ''
     return f'''<article class="evidence">
-<div class="document {'photo' if photo else ''}"><a href="{esc(original)}" data-preview="{esc(title)}" aria-label="Enlarge {esc(title)}">{image(src, title)}</a></div>
+<div class="document {'photo' if photo else ''}"><a href="{esc(original)}" data-preview="{esc(title)}"{gallery_data} aria-label="Enlarge {esc(title)}">{image(src, title)}</a></div>
 <div class="caption"><p class="eyebrow">{esc(issuer)}</p><h3>{esc(title)}</h3><p>{caption}</p>
 {links(*extra, ('Original image' if original == src else 'Original document', original))}</div></article>'''
 
 
-def cert(stem, title, issuer, caption, extra=()):
+def cert(stem, title, issuer, caption, extra=(), gallery=()):
     base = ROOT / 'assets/certificates'
     thumbnails = list(base.glob(stem + '-thumb.*'))
     src = thumbnails[0] if thumbnails else base / (stem + '.jpg')
@@ -39,7 +43,7 @@ def cert(stem, title, issuer, caption, extra=()):
         original = base / 'georgia-tech-capstone-judge-certificate.pdf'
     if not original.exists():
         original = src
-    return evidence(title, issuer, caption, str(src.relative_to(ROOT)), str(original.relative_to(ROOT)), extra)
+    return evidence(title, issuer, caption, str(src.relative_to(ROOT)), str(original.relative_to(ROOT)), extra, gallery=gallery)
 
 
 def mentor_recognition():
@@ -94,11 +98,11 @@ def page(slug, title, intro, sections, body, home=False):
 <meta name="description" content="{esc(intro)}"><link rel="canonical" href="https://jrtechfolio.com/{slug}.html">
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)} | Jayakumar Ramalingam"><meta property="og:description" content="{esc(intro)}">
 <meta property="og:url" content="https://jrtechfolio.com/{slug}.html"><meta property="og:image" content="https://jrtechfolio.com/assets/profile/jay-full.jpeg">
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="evidence.css?v=20261005c"><script defer src="evidence.js?v=20261005"></script></head>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="evidence.css?v=20261005d"><script defer src="evidence.js?v=20261005b"></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap"><div class="identity"><a class="brand" href="index.html"><span class="monogram" aria-hidden="true">JR</span>Jayakumar Ramalingam</a><small>Cloud architecture &amp; intelligent systems</small></div><nav class="primary" aria-label="Primary navigation">{nav}</nav></div></header>
 <main id="main" class="wrap">{heading}{jump}{body}{onward}</main>
 <footer class="footer"><div class="wrap"><p>&copy; 2026 Jayakumar Ramalingam</p><div><a href="https://www.linkedin.com/in/jayakumarramalingam/">LinkedIn</a><a href="https://orcid.org/0009-0007-9823-3097">ORCID</a><a href="https://github.com/jayakumar-ramalingam/">GitHub</a></div></div></footer>
-<dialog id="evidence-viewer" aria-labelledby="viewer-title"><div class="viewer-head"><p id="viewer-title">Evidence</p><button class="close" type="button" aria-label="Close preview" title="Close preview">&times;</button></div><div class="viewer-image"><img alt=""></div><a class="viewer-link" href="#">Open original evidence</a></dialog>
+<dialog id="evidence-viewer" aria-labelledby="viewer-title"><div class="viewer-head"><p id="viewer-title">Evidence</p><button class="close" type="button" aria-label="Close preview" title="Close preview">&times;</button></div><div class="viewer-image"><img alt=""></div><div class="viewer-actions"><div class="viewer-controls" hidden><button class="previous" type="button" aria-label="Previous image" title="Previous image">&#8592;</button><span class="viewer-count"></span><button class="next" type="button" aria-label="Next image" title="Next image">&#8594;</button></div><a class="viewer-link" href="#">Open original evidence</a></div></dialog>
 </body></html>'''
     (ROOT / f'{slug}.html').write_text(document)
 
@@ -134,15 +138,11 @@ innovation += section('practice', '04', 'From production experience to practitio
 page('innovation', 'Invention & Innovation', 'Production personalisation, experimentation and the research that makes the approach reusable.', [('platform','Production work'),('launch','Public product evidence'),('research','Research'),('practice','Practitioner writing')], innovation)
 
 
-inspiring = section('datatech', '01', 'DataTech: guidance recognised by the organiser', 'MinneAnalytics / Richfield, Minnesota / 15 May 2026', grid(
-    cert('datatech-2026-speaker-appreciation', 'Speaker recognition from the DataTech chair', 'John Hogue / DataTech Chair & Board Member', 'The letter confirms competitive speaker selection, engaged questions from senior data architects and analytics leaders, and positive responses to the practical guidance.', [('Official session', DATA)]),
-    evidence('From Batch to Streaming', 'DataTech 2026 / Event photograph', 'Presented <em>From Batch to Streaming: Data Architecture for Context-Aware Personalization</em>, explaining the progression from batch pipelines to streaming, feature stores and real-time retrieval.', 'assets/events/datatech-event-photo.jpeg', extra=[('Session title and abstract', DATA)], photo=True))
+inspiring = section('datatech', '01', 'DataTech: guidance recognised by the organiser', 'MinneAnalytics / Richfield, Minnesota / 15 May 2026', '<div class="wide-document">' +
+    cert('datatech-2026-speaker-appreciation', 'From Batch to Streaming', 'John Hogue / DataTech Chair & Board Member', 'The letter confirms competitive speaker selection, engaged questions from senior data architects and analytics leaders, and positive responses to practical guidance on context-aware personalisation.', [('Official session', DATA)], gallery=[('At DataTech 2026', 'assets/events/datatech-event-photo.jpeg')]) + '</div>'
     + '<blockquote class="quote">"translate complex architectural concepts into actionable guidance for a working professional audience."<cite>John Hogue, DataTech 2026 Chair, recognition letter dated 26 May 2026</cite></blockquote>')
-inspiring += section('ai4', '02', 'Ai4: The Cloud Playbook Was Written Before AI', 'Las Vegas / August 2026', grid(
-    evidence('Ai4 speaker listing', 'Ai4 / Organiser directory', 'The organiser directory names Jayakumar Ramalingam as a speaker. The session explored workload placement, workflow changes, shared capabilities and recovery for AI systems. A public attendee recap reports the organisers\' figure of more than 12,000 attendees from 100 countries; this is event reach, not session attendance.', 'assets/events/ai4/ai4-speaker-directory.png', extra=[('Official speaker directory', 'https://ai4.io/speakers/'), ('Event attendance recap', 'https://www.wwt.com/blog/ai4-2026-recap-from-ai-experiments-to-ai-workloads')]),
-    evidence('Conference programme', 'Ai4 2026 / Programme photograph', 'A programme record from the event provides supporting context for the speaking engagement.', 'assets/events/ai4/ai4-session-schedule.jpeg', photo=True))
-    + grid(evidence('At Ai4 2026', 'Event photograph', 'Conference participation and professional exchange at Ai4.', 'assets/events/ai4/ai4-event-photo.jpeg', photo=True),
-           evidence('Ai4 speaker badge', 'Speaker credential', 'The event-issued badge records the speaker role.', 'assets/events/ai4/ai4-speaker-badge.jpeg', photo=True)))
+inspiring += section('ai4', '02', 'Ai4: The Cloud Playbook Was Written Before AI', 'Las Vegas / August 2026', '<div class="wide-document">' +
+    evidence('Ai4 speaker listing', 'Ai4 / Organiser directory', 'The organiser directory names Jayakumar Ramalingam as a speaker. The session explored workload placement, workflow changes, shared capabilities and recovery for AI systems. A public attendee recap reports the organisers\' figure of more than 12,000 attendees from 100 countries; this is event reach, not session attendance. The preview includes the programme, event photo and speaker badge.', 'assets/events/ai4/ai4-speaker-directory.png', extra=[('Official speaker directory', 'https://ai4.io/speakers/'), ('Event attendance recap', 'https://www.wwt.com/blog/ai4-2026-recap-from-ai-experiments-to-ai-workloads')], gallery=[('Ai4 conference programme', 'assets/events/ai4/ai4-session-schedule.jpeg'), ('At Ai4 2026', 'assets/events/ai4/ai4-event-photo.jpeg'), ('Ai4 speaker badge', 'assets/events/ai4/ai4-speaker-badge.jpeg')]) + '</div>')
 inspiring += section('guidance', '03', 'Shared engineering practice across teams', 'Pandora and SiriusXM / Organisational contribution',
     '<div class="text-columns"><div><h3>Pandora: a shared data-access framework</h3><p>In 2021, I developed and evolved a common data-access and caching framework used across playback continuity, recommendations, listening modes, listener history and collections. Working sessions addressed invalidation, retries, refresh and failure handling.</p></div><div><h3>SiriusXM: architecture decision practice</h3><p>I facilitated architecture reviews and published Architecture Decision Records covering alternatives and operational consequences. Engineers across several teams reused the reasoning to improve failure isolation, asynchronous processing and degradation behaviour.</p></div></div>'
     + note('Internal adoption, changed engineering practice and use by senior engineering leaders are supporter-verifiable. Confidential repositories, architecture records and production documents are not publicly reproduced.'))
@@ -180,10 +180,8 @@ page('consultancy', 'Consultancy', 'Adopted technical recommendations across ret
 influence = section('speaking', '01', 'Keynote and conference speaking', 'Production AI architecture shared with research and practitioner audiences.', grid(
     cert('icdsa-2026-keynote-certificate', 'Event-Driven Intelligence: Architecting Real-Time AI Decision Systems at Scale', 'ICDSA 2026 / Keynote speaker', 'Keynote at the 7th International Conference on Data Science and Applications, addressing timely decisions and operational controls in production AI.', [('Official keynote programme', KEYNOTE)]),
     evidence('Ai4 2026: The Cloud Playbook Was Written Before AI', 'Ai4 2026 / Speaker', 'The event-issued speaker badge identifies my role. The session addressed workload placement, shared capabilities and recovery for AI systems.', 'assets/events/ai4/ai4-speaker-badge.jpeg', extra=[('Official speaker directory', 'https://ai4.io/speakers/'), ('Conference programme', 'assets/events/ai4/ai4-session-schedule.jpeg')]))
-    + grid(cert('datatech-2026-speaker-appreciation', 'From Batch to Streaming', 'MinneAnalytics DataTech / Featured speaker', 'Organiser confirmation of the session on context-aware personalisation, competitive selection and practitioner engagement.', [('Official session', DATA)]),
-           evidence('DataTech 2026', 'MinneAnalytics / Event photograph', 'Participation in the DataTech professional community event in Richfield, Minnesota.', 'assets/events/datatech-stage-photo.jpeg', photo=True))
-    + grid(evidence('Event-sourced multi-agent fault diagnosis', 'IEEE IEMCON 2026 / Paper presentation', 'Presenting research on autonomous fault diagnosis and resilient self-healing in cloud-native microservices at the University of California, Berkeley.', 'assets/events/iemcon/iemcon-presentation.jpeg', photo=True),
-           evidence('At IEEE IEMCON 2026', 'University of California, Berkeley / 30 September-2 October 2026', 'Conference photo with fellow attendees. The presentation photo and delegate badge document participation; no indexed proceedings claim is made here.', 'assets/events/iemcon/iemcon-group-photo.jpeg', extra=[('Delegate badge', 'assets/events/iemcon/iemcon-delegate-badge.jpeg')], photo=True)))
+    + grid(cert('datatech-2026-speaker-appreciation', 'From Batch to Streaming', 'MinneAnalytics DataTech / Featured speaker', 'The organiser confirms the session on context-aware personalisation, competitive selection and practitioner engagement. An event photograph is available in the preview.', [('Official session', DATA)], gallery=[('At DataTech 2026', 'assets/events/datatech-stage-photo.jpeg')]),
+           evidence('Event-sourced multi-agent fault diagnosis', 'IEEE IEMCON 2026 / Paper presentation', 'Presented research on autonomous fault diagnosis and resilient self-healing in cloud-native microservices at the University of California, Berkeley. The preview also includes a conference photograph and delegate badge; no indexed proceedings claim is made here.', 'assets/events/iemcon/iemcon-presentation.jpeg', photo=True, gallery=[('At IEEE IEMCON 2026', 'assets/events/iemcon/iemcon-group-photo.jpeg'), ('IEMCON delegate badge', 'assets/events/iemcon/iemcon-delegate-badge.jpeg')])))
 influence += section('committees', '02', 'Technical programme and peer-review service', 'Committee appointments and review records document research evaluation; they do not establish an event-organising or advisory-board role.', grid(
     cert('aiiot-2026-reviewer-certificate', 'World AI IoT Congress', 'AIIoT 2026 / TPC member and reviewer', 'The certificate recognises technical programme committee service and review of twelve papers.', [('Technical committee listing', 'https://worldaiiotcongress.org/technical-committee/')]),
     cert('2ai-2026-reviewer-certificate', 'Applied Artificial Intelligence', '2AI 2026 / Technical Program Committee', 'Recognition for peer review and technical evaluation of submitted manuscripts.', [('Conference organiser', 'https://2ai-conference.org/')]))
