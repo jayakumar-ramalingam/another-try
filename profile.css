@@ -67,21 +67,13 @@
 .practice-section { display: grid; grid-template-columns: .75fr 1.25fr; gap: 64px; padding: 36px; background: #eaf1ed; border-radius: 6px; }
 .practice-section p { color: var(--muted); line-height: 1.8; }
 .practice-section p + p { margin-top: 16px; }
-.about-contributions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
-.about-contributions article { border-top: 1px solid var(--line); padding-top: 24px; }
-.about-contributions h3 { margin-bottom: 16px; }
-.about-contributions p { color: var(--muted); line-height: 1.8; }
-.about-contributions .text-link { margin-right: 14px; }
 .expertise-list { margin: 0; }
 .expertise-list div { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 48px; border-top: 1px solid var(--line); padding: 20px 0; }
 .expertise-list dt { font-weight: 700; }
 .expertise-list dd { margin: 0; color: var(--muted); }
-.credentials-band { display: grid; grid-template-columns: 1.4fr .8fr; gap: 48px; padding: 32px; border: 1px solid var(--line); border-radius: 6px; background: white; }
+.credentials-band { padding: 32px; border: 1px solid var(--line); border-radius: 6px; background: white; }
 .credentials-band h2 { margin-bottom: 20px; }
 .credentials-band p { margin-top: 12px; color: var(--muted); }
-.mentoring-recognition { border-left: 1px solid var(--line); padding-left: 28px; }
-.mentoring-recognition > span { font-size: .875rem; color: var(--accent-dark); }
-.mentoring-recognition h3 { margin-top: 14px; }
 .closing-links { margin-top: 64px; border-bottom: 0; }
 .profile-refresh .site-footer { font-size: .875rem; }
 .profile-refresh .site-footer a { font-weight: 650; }
@@ -94,7 +86,7 @@
 }
 @media (max-width: 760px) {
   .profile-refresh .profile { padding: 28px 0 44px; }
-  .intro-grid, .bio-intro, .section-heading-wide, .practice-section, .credentials-band { grid-template-columns: 1fr; }
+  .intro-grid, .bio-intro, .section-heading-wide, .practice-section { grid-template-columns: 1fr; }
   .intro-grid, .bio-intro { gap: 32px; padding-top: 8px; }
   .profile-refresh h1 { font-size: clamp(2.5rem, 8vw, 3.5rem); max-width: 18ch; }
   .profile-refresh .intro-lead { font-size: 1.0625rem; }
@@ -103,7 +95,7 @@
   .profile-links > span { flex-basis: 100%; }
   .profile-refresh .section { margin-top: 48px; }
   .section-heading-wide { gap: 16px; }
-  .work-grid, .about-contributions { grid-template-columns: 1fr; }
+  .work-grid { grid-template-columns: 1fr; }
   .work-card { padding: 24px; }
   .conference-portrait { max-width: 420px; width: 100%; }
   .career-facts { gap: 20px; }
@@ -111,7 +103,6 @@
   .career-facts dd { font-size: .875rem; }
   .career-entries article, .expertise-list div { grid-template-columns: 1fr; gap: 16px; }
   .practice-section, .credentials-band { padding: 24px; gap: 24px; }
-  .mentoring-recognition { padding: 24px 0 0; border-left: 0; border-top: 1px solid var(--line); }
 }
 @media (max-width: 420px) {
   .career-facts { grid-template-columns: 1fr; }
