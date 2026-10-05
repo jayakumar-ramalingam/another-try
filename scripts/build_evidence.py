@@ -42,6 +42,19 @@ def cert(stem, title, issuer, caption, extra=()):
     return evidence(title, issuer, caption, str(src.relative_to(ROOT)), str(original.relative_to(ROOT)), extra)
 
 
+def mentor_recognition():
+    items = [
+        ('adplist-top-50-data-engineering-mentor', 'Top 50 Data Engineering Mentor, April-June 2026'),
+        ('adplist-top-1-percent-mentor-2026', 'Top 1% Mentor in Engineering, September 2026'),
+    ]
+    documents = []
+    for stem, title in items:
+        original = f'assets/certificates/{stem}.pdf'
+        thumb = f'assets/certificates/{stem}-thumb.png'
+        documents.append(f'<div class="document"><a href="{original}" data-preview="{esc(title)}" aria-label="Enlarge {esc(title)}">{image(thumb, title)}</a></div>')
+    return '<article class="evidence"><div class="paired-documents">' + ''.join(documents) + '</div><div class="caption"><p class="eyebrow">ADPList / 2026</p><h3>Mentoring recognition</h3><p>ADPList recognised my Data Engineering mentorship during April-June and awarded Top 1% Mentor recognition in Engineering for September. Both certificates are visible above.</p>' + links(('Public mentor profile', 'https://adplist.org/mentors/jayakumar-ramalingam'), ('Top 50 certificate', f'assets/certificates/{items[0][0]}.pdf'), ('Top 1% certificate', f'assets/certificates/{items[1][0]}.pdf')) + '</div></article>'
+
+
 def grid(*items):
     return '<div class="grid">' + ''.join(items) + '</div>'
 
@@ -134,7 +147,7 @@ inspiring += section('guidance', '03', 'Shared engineering practice across teams
     '<div class="text-columns"><div><h3>Pandora: a shared data-access framework</h3><p>In 2021, I developed and evolved a common data-access and caching framework used across playback continuity, recommendations, listening modes, listener history and collections. Working sessions addressed invalidation, retries, refresh and failure handling.</p></div><div><h3>SiriusXM: architecture decision practice</h3><p>I facilitated architecture reviews and published Architecture Decision Records covering alternatives and operational consequences. Engineers across several teams reused the reasoning to improve failure isolation, asynchronous processing and degradation behaviour.</p></div></div>'
     + note('Internal adoption, changed engineering practice and use by senior engineering leaders are supporter-verifiable. Confidential repositories, architecture records and production documents are not publicly reproduced.'))
 inspiring += section('writing', '04', 'Making architectural reasoning available to others', 'Practitioner writing', source('DATAVERSITY', 'Why Observability Is Becoming a Governance Layer for Agentic Data Systems', 'Explains how decision provenance and governance should inform the design and review of autonomous data systems.', OBS, 'Read the article'))
-inspiring += section('mentoring', '05', 'ADPList mentoring recognition', 'April-June 2026', '<div class="wide-document">' + cert('adplist-top-50-data-engineering-mentor', 'Top 50 Data Engineering Mentor', 'ADPList / Certificate of achievement', 'Recognition of mentorship and contributions within the ADPList community during April-June 2026. The public profile documents the mentoring activity.', [('Public mentor profile', 'https://adplist.org/mentors/jayakumar-ramalingam')]) + '</div>')
+inspiring += section('mentoring', '05', 'ADPList mentoring recognition', 'Two independently issued recognitions in 2026.', '<div class="wide-document">' + mentor_recognition() + '</div>')
 inspiring += section('memberships', '06', 'Professional society participation', 'Memberships and fellowships provide additional professional context.', grid(
     cert('ieee-senior-member-letter', 'IEEE Senior Member', 'IEEE', 'Letter recognising elevation to Senior Member grade.'),
     cert('iete-2026-fellow-certificate', 'IETE Fellow', 'Institution of Electronics and Telecommunication Engineers', 'Fellow membership recognition.'))
@@ -193,7 +206,7 @@ influence += section('writing', '05', 'Practitioner writing', 'Articles that mak
 influence += section('publications', '06', 'Research publications', 'Three indexed IEEE conference papers and two journal articles.', research_core()
     + grid(cert('iwis-2026-paper-presentation-certificate', 'An Event-Driven Context-Aware Framework for Margin-Preserving Dynamic Pricing in High-Velocity Retail Commerce Systems', 'IEEE Xplore / IWIS 2026 / First author', 'Published work on context-aware retail pricing. The presentation certificate appears above.', [('IEEE Xplore paper', 'https://ieeexplore.ieee.org/document/11667738')]),
            cert('ijfmr-2025-ai-native-data-platforms-publication-certificate', 'Building AI-Native Data Platforms: From Data Lakes to Intelligent Decision Platforms', 'IJFMR / Journal publication / Co-author', 'Journal research examining the evolution of data platforms into intelligent decision systems.', [('Journal article', IJFMR)]))
-    + source('IEEE Xplore / ICOSAAS 2026 / Second author', 'Beyond Rules-Based Fraud Detection: Explainable Graph AI for Streaming Retail Transactions', 'Indexed conference paper on explainable graph methods for streaming retail fraud detection.', 'https://ieeexplore.ieee.org/document/11648578', 'IEEE Xplore paper')
+    + '<div class="wide-document" style="margin-top:28px">' + cert('icosaas-2026-fraud-presentation-certificate', 'Beyond Rules-Based Fraud Detection: Explainable Graph AI for Streaming Retail Transactions', 'IEEE Xplore / ICOSAAS 2026 / Second author', 'Conference certificate documenting presentation of the co-authored fraud-detection paper. The publication is indexed by IEEE Xplore.', [('IEEE Xplore paper', 'https://ieeexplore.ieee.org/document/11648578')]) + '</div>'
     + note('Additional presented research covers an event-sourced multi-agent framework for fault diagnosis and self-healing, and a threat model for the Model Context Protocol. These are recorded as presentations, without claiming an indexed proceedings record.'))
 influence += section('media', '07', 'Independent media and interviews', 'Published commentary and conversations beyond authored technical articles.', sources(
     source('The New Stack', 'Agent memory and governance', 'Quoted analysis on governance risks associated with agent memory and offline processing.', 'https://thenewstack.io/anthropic-agent-memory-dreaming/', 'Published coverage'),
