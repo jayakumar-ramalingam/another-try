@@ -22,10 +22,10 @@ def image(src, alt, eager=False):
     return f'<img src="{esc(src)}" alt="{esc(alt)}" width="{width}" height="{height}" loading="{"eager" if eager else "lazy"}" decoding="async">'
 
 
-def evidence(title, issuer, caption, src, original=None, extra=(), photo=False):
+def evidence(title, issuer, caption, src, original=None, extra=(), photo=False, image_class=''):
     original = original or src
     return f'''<article class="evidence">
-<div class="document {'photo' if photo else ''}"><a href="{esc(original)}" data-preview="{esc(title)}" aria-label="Enlarge {esc(title)}">{image(src, title)}</a></div>
+<div class="document {'photo' if photo else ''} {esc(image_class)}"><a href="{esc(original)}" data-preview="{esc(title)}" aria-label="Enlarge {esc(title)}">{image(src, title)}</a></div>
 <div class="caption"><p class="eyebrow">{esc(issuer)}</p><h3>{esc(title)}</h3><p>{caption}</p>
 {links(*extra, ('Original image' if original == src else 'Original document', original))}</div></article>'''
 
@@ -94,7 +94,7 @@ def page(slug, title, intro, sections, body, home=False):
 <meta name="description" content="{esc(intro)}"><link rel="canonical" href="https://jrtechfolio.com/{slug}.html">
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)} | Jayakumar Ramalingam"><meta property="og:description" content="{esc(intro)}">
 <meta property="og:url" content="https://jrtechfolio.com/{slug}.html"><meta property="og:image" content="https://jrtechfolio.com/assets/profile/jay-full.jpeg">
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="evidence.css?v=20261005b"><script defer src="evidence.js?v=20261005"></script></head>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="evidence.css?v=20261005c"><script defer src="evidence.js?v=20261005"></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap"><div class="identity"><a class="brand" href="index.html"><span class="monogram" aria-hidden="true">JR</span>Jayakumar Ramalingam</a><small>Cloud architecture &amp; intelligent systems</small></div><nav class="primary" aria-label="Primary navigation">{nav}</nav></div></header>
 <main id="main" class="wrap">{heading}{jump}{body}{onward}</main>
 <footer class="footer"><div class="wrap"><p>&copy; 2026 Jayakumar Ramalingam</p><div><a href="https://www.linkedin.com/in/jayakumarramalingam/">LinkedIn</a><a href="https://orcid.org/0009-0007-9823-3097">ORCID</a><a href="https://github.com/jayakumar-ramalingam/">GitHub</a></div></div></footer>
@@ -182,8 +182,8 @@ influence = section('speaking', '01', 'Keynote and conference speaking', 'Produc
     evidence('Ai4 2026: The Cloud Playbook Was Written Before AI', 'Ai4 2026 / Speaker', 'The event-issued speaker badge identifies my role. The session addressed workload placement, shared capabilities and recovery for AI systems.', 'assets/events/ai4/ai4-speaker-badge.jpeg', extra=[('Official speaker directory', 'https://ai4.io/speakers/'), ('Conference programme', 'assets/events/ai4/ai4-session-schedule.jpeg')]))
     + grid(cert('datatech-2026-speaker-appreciation', 'From Batch to Streaming', 'MinneAnalytics DataTech / Featured speaker', 'Organiser confirmation of the session on context-aware personalisation, competitive selection and practitioner engagement.', [('Official session', DATA)]),
            evidence('DataTech 2026', 'MinneAnalytics / Event photograph', 'Participation in the DataTech professional community event in Richfield, Minnesota.', 'assets/events/datatech-stage-photo.jpeg', photo=True))
-    + grid(evidence('Event-sourced multi-agent fault diagnosis', 'IEEE IEMCON 2026 / Paper presentation', 'Presenting research on autonomous fault diagnosis and resilient self-healing in cloud-native microservices at the Berkeley conference.', 'assets/events/iemcon/iemcon-presentation.jpeg', photo=True),
-           evidence('At IEEE IEMCON 2026', 'Berkeley / 30 September-2 October 2026', 'Conference photo with fellow attendees. The presentation photo and delegate badge document participation; no indexed proceedings claim is made here.', 'assets/events/iemcon/iemcon-group-photo.jpeg', extra=[('Delegate badge', 'assets/events/iemcon/iemcon-delegate-badge.jpeg')], photo=True)))
+    + grid(evidence('Event-sourced multi-agent fault diagnosis', 'IEEE IEMCON 2026 / Paper presentation', 'Presenting research on autonomous fault diagnosis and resilient self-healing in cloud-native microservices at the University of California, Berkeley.', 'assets/events/iemcon/iemcon-presentation.jpeg', photo=True, image_class='presentation-crop'),
+           evidence('At IEEE IEMCON 2026', 'University of California, Berkeley / 30 September-2 October 2026', 'Conference photo with fellow attendees. The presentation photo and delegate badge document participation; no indexed proceedings claim is made here.', 'assets/events/iemcon/iemcon-group-photo.jpeg', extra=[('Delegate badge', 'assets/events/iemcon/iemcon-delegate-badge.jpeg')], photo=True)))
 influence += section('committees', '02', 'Technical programme and peer-review service', 'Committee appointments and review records document research evaluation; they do not establish an event-organising or advisory-board role.', grid(
     cert('aiiot-2026-reviewer-certificate', 'World AI IoT Congress', 'AIIoT 2026 / TPC member and reviewer', 'The certificate recognises technical programme committee service and review of twelve papers.', [('Technical committee listing', 'https://worldaiiotcongress.org/technical-committee/')]),
     cert('2ai-2026-reviewer-certificate', 'Applied Artificial Intelligence', '2AI 2026 / Technical Program Committee', 'Recognition for peer review and technical evaluation of submitted manuscripts.', [('Conference organiser', 'https://2ai-conference.org/')]))
