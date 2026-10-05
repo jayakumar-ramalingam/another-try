@@ -14,6 +14,7 @@
     const item = items[current];
     image.src = item.src;
     image.alt = item.title;
+    image.classList.toggle('badge-crop', item.src.includes('ai4-speaker-badge.jpeg'));
     title.textContent = item.title;
     original.href = item.href;
     count.textContent = `${current + 1} / ${items.length}`;
