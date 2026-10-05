@@ -1,0 +1,43 @@
+/* Shared navigation and page rhythm for the six main portfolio pages. */
+:root { --header-height: 124px; }
+html { scroll-padding-top: calc(var(--header-height) + 90px); }
+.header { position: sticky; top: 0; z-index: 30; background: #fff; border-bottom: 1px solid #dbe3df; }
+.header .wrap { width: min(1200px, calc(100% - 64px)); margin: auto; }
+.header .identity { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 16px 0 8px; }
+.header .brand { display: flex; align-items: center; gap: 12px; color: #202c2b; font: 700 16px/1.4 Arial, sans-serif; text-decoration: none; }
+.header .monogram { display: grid; place-items: center; width: 36px; height: 36px; flex: 0 0 36px; color: #fff; background: #145c4c; font: 22px Georgia, serif; }
+.header .identity small { font: 13px/1.4 Arial, sans-serif; color: #5b6865; }
+.header .primary { display: flex; flex-wrap: nowrap; gap: 28px; overflow-x: auto; scrollbar-width: thin; }
+.header .primary a { flex: 0 0 auto; padding: 13px 0; border-bottom: 3px solid transparent; color: #5b6865; text-decoration: none; font: 600 14px/1.5 Arial, sans-serif; }
+.header .primary a:hover, .header .primary a[aria-current="page"] { color: #145c4c; border-bottom-color: #145c4c; }
+.header a:focus-visible { outline: 3px solid #926320; outline-offset: -3px; }
+.page-index { position: sticky; top: var(--header-height); z-index: 20; background: #fff; flex-wrap: nowrap; overflow-x: auto; gap: 24px; padding: 0; scrollbar-width: thin; }
+.page-index a { flex: 0 0 auto; padding: 17px 0 14px; border-bottom: 3px solid transparent; }
+.page-index a[aria-current="location"] { color: #145c4c; font-weight: 700; border-bottom-color: #926320; }
+.page-index a:focus-visible { outline-offset: -3px; }
+main.wrap { width: min(1200px, calc(100% - 64px)); }
+.profile-refresh { background: #fff; }
+.profile-refresh .profile { width: min(1200px, calc(100% - 64px)); max-width: none; }
+.profile-refresh h1 { font-family: Georgia, serif; font-size: 48px; line-height: 1.12; font-weight: 400; letter-spacing: 0; }
+.profile-refresh h2 { font-size: 30px; letter-spacing: 0; }
+.profile-refresh h3, .profile-refresh .eyebrow, .profile-refresh dt { letter-spacing: 0; }
+.profile-refresh .career-facts dt { font-size: 36px; }
+.profile-refresh .work-panel h2 { font-size: 26px; }
+.profile-refresh .work-panel { border-radius: 4px; }
+.profile-refresh .practice-section, .profile-refresh .credentials-band { border-radius: 0; border: 0; border-top: 1px solid #dbe3df; border-bottom: 1px solid #dbe3df; padding: 32px 0; background: #fff; }
+.profile-portrait { width: 100%; max-width: 390px; height: auto; justify-self: end; }
+@media (max-width: 900px) { .header .identity small { display: none; } }
+@media (max-width: 620px) {
+  .header .wrap, main.wrap, .profile-refresh .profile { width: calc(100% - 32px); }
+  .header .brand { font-size: 14px; }
+  .header .identity { padding: 12px 0 4px; }
+  .header .primary { display: flex; gap: 22px; }
+  .header .primary a { font-size: 13px; padding: 12px 0; }
+  .page-index { gap: 22px; }
+  .page-index a { padding: 13px 0 10px; }
+  .profile-refresh h1 { font-size: 36px; }
+  .profile-refresh h2 { font-size: 26px; }
+  .profile-refresh .career-facts dt { font-size: 30px; }
+  .profile-portrait { justify-self: start; max-width: 320px; }
+}
+@media print { .header, .page-index { position: static; } .page-index { display: none; } }

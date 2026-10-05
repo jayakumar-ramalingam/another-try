@@ -28,8 +28,9 @@ def evidence(title, issuer, caption, src, original=None, extra=(), photo=False, 
     gallery_items = [{'src': src, 'href': original, 'title': title}]
     gallery_items.extend({'src': item_src, 'href': item_src, 'title': item_title} for item_title, item_src in gallery)
     gallery_data = f' data-gallery="{esc(json.dumps(gallery_items))}"' if gallery else ''
+    gallery_count = f'<span class="media-count" aria-hidden="true">{len(gallery_items)} images</span>' if gallery else ''
     return f'''<article class="evidence">
-<div class="document {'photo' if photo else ''} {esc(preview_class)}"><a href="{esc(original)}" data-preview="{esc(title)}"{gallery_data} aria-label="Enlarge {esc(title)}">{image(src, title)}</a></div>
+<div class="document {'photo' if photo else ''} {esc(preview_class)}"><a href="{esc(original)}" data-preview="{esc(title)}"{gallery_data} aria-label="Enlarge {esc(title)}">{image(src, title)}{gallery_count}</a></div>
 <div class="caption"><p class="eyebrow">{esc(issuer)}</p><h3>{esc(title)}</h3><p>{caption}</p>
 {links(*extra, ('Original image' if original == src else 'Original document', original))}</div></article>'''
 
@@ -98,7 +99,7 @@ def page(slug, title, intro, sections, body, home=False):
 <meta name="description" content="{esc(intro)}"><link rel="canonical" href="https://jrtechfolio.com/{slug}.html">
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)} | Jayakumar Ramalingam"><meta property="og:description" content="{esc(intro)}">
 <meta property="og:url" content="https://jrtechfolio.com/{slug}.html"><meta property="og:image" content="https://jrtechfolio.com/assets/profile/jay-full.jpeg">
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="evidence.css?v=20261005f"><script defer src="evidence.js?v=20261005c"></script></head>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="evidence.css?v=20261005g"><link rel="stylesheet" href="shell.css?v=20261005"><script defer src="navigation.js?v=20261005"></script><script defer src="evidence.js?v=20261005d"></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap"><div class="identity"><a class="brand" href="index.html"><span class="monogram" aria-hidden="true">JR</span>Jayakumar Ramalingam</a><small>Cloud architecture &amp; intelligent systems</small></div><nav class="primary" aria-label="Primary navigation">{nav}</nav></div></header>
 <main id="main" class="wrap">{heading}{jump}{body}{onward}</main>
 <footer class="footer"><div class="wrap"><p>&copy; 2026 Jayakumar Ramalingam</p><div><a href="https://www.linkedin.com/in/jayakumarramalingam/">LinkedIn</a><a href="https://orcid.org/0009-0007-9823-3097">ORCID</a><a href="https://github.com/jayakumar-ramalingam/">GitHub</a></div></div></footer>

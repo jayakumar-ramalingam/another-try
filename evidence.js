@@ -6,6 +6,8 @@
   const original = dialog.querySelector('.viewer-link');
   const controls = dialog.querySelector('.viewer-controls');
   const count = dialog.querySelector('.viewer-count');
+  count.setAttribute('role', 'status');
+  count.setAttribute('aria-live', 'polite');
   let opener;
   let items = [];
   let current = 0;
@@ -33,8 +35,9 @@
   dialog.querySelector('.previous').addEventListener('click', () => showItem(current - 1));
   dialog.querySelector('.next').addEventListener('click', () => showItem(current + 1));
   dialog.addEventListener('keydown', event => {
-    if (event.key === 'ArrowLeft' && items.length > 1) showItem(current - 1);
-    if (event.key === 'ArrowRight' && items.length > 1) showItem(current + 1);
+    if (items.length < 2 || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    showItem(current + (event.key === 'ArrowLeft' ? -1 : 1));
   });
   dialog.querySelector('.close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', event => {
