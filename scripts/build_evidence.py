@@ -50,6 +50,7 @@ def cert(stem, title, issuer, caption, extra=(), gallery=()):
 def mentor_recognition():
     items = [
         ('adplist-top-50-data-engineering-mentor', 'Top 50 Data Engineering Mentor, April-June 2026'),
+        ('adplist-top-50-data-engineering-mentor-jul-sep-2026', 'Top 50 Data Engineering Mentor, July-September 2026'),
         ('adplist-top-1-percent-mentor-2026', 'Top 1% Mentor in Engineering, September 2026'),
     ]
     documents = []
@@ -57,7 +58,7 @@ def mentor_recognition():
         original = f'assets/certificates/{stem}.pdf'
         thumb = f'assets/certificates/{stem}-thumb.png'
         documents.append(f'<div class="document"><a href="{original}" data-preview="{esc(title)}" aria-label="Enlarge {esc(title)}">{image(thumb, title)}</a></div>')
-    return '<article class="evidence"><div class="paired-documents">' + ''.join(documents) + '</div><div class="caption"><p class="eyebrow">ADPList / 2026</p><h3>Mentoring recognition</h3><p>ADPList recognised my Data Engineering mentorship during April-June and awarded Top 1% Mentor recognition in Engineering for September. Both certificates are visible above.</p>' + links(('Public mentor profile', 'https://adplist.org/mentors/jayakumar-ramalingam'), ('Top 50 certificate', f'assets/certificates/{items[0][0]}.pdf'), ('Top 1% certificate', f'assets/certificates/{items[1][0]}.pdf')) + '</div></article>'
+    return '<article class="evidence"><div class="paired-documents">' + ''.join(documents) + '</div><div class="caption"><p class="eyebrow">ADPList / 2026</p><h3>Mentoring recognition</h3><p>ADPList recognised my Data Engineering mentorship in both April-June and July-September 2026, and awarded Top 1% Mentor in Engineering recognition for September.</p>' + links(('Public mentor profile', 'https://adplist.org/mentors/jayakumar-ramalingam'), ('April-June certificate', f'assets/certificates/{items[0][0]}.pdf'), ('July-September certificate', f'assets/certificates/{items[1][0]}.pdf'), ('Top 1% certificate', f'assets/certificates/{items[2][0]}.pdf')) + '</div></article>'
 
 
 def grid(*items):
@@ -99,7 +100,7 @@ def page(slug, title, intro, sections, body, home=False):
 <meta name="description" content="{esc(intro)}"><link rel="canonical" href="https://jrtechfolio.com/{slug}.html">
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)} | Jayakumar Ramalingam"><meta property="og:description" content="{esc(intro)}">
 <meta property="og:url" content="https://jrtechfolio.com/{slug}.html"><meta property="og:image" content="https://jrtechfolio.com/assets/profile/jay-full.jpeg">
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="evidence.css?v=20261005g"><link rel="stylesheet" href="shell.css?v=20261005b"><script defer src="navigation.js?v=20261005b"></script><script defer src="evidence.js?v=20261005d"></script></head>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="evidence.css?v=20261006"><link rel="stylesheet" href="shell.css?v=20261005b"><script defer src="navigation.js?v=20261005b"></script><script defer src="evidence.js?v=20261005d"></script></head>
 <body><a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap"><div class="identity"><a class="brand" href="index.html"><span class="monogram" aria-hidden="true">JR</span>Jayakumar Ramalingam</a><small>Cloud architecture &amp; intelligent systems</small></div><nav class="primary" aria-label="Primary navigation">{nav}</nav></div></header>
 <main id="main" class="wrap">{heading}{jump}{body}{onward}</main>
 <footer class="footer"><div class="wrap"><p>&copy; 2026 Jayakumar Ramalingam</p><div><a href="https://www.linkedin.com/in/jayakumarramalingam/">LinkedIn</a><a href="https://orcid.org/0009-0007-9823-3097">ORCID</a><a href="https://github.com/jayakumar-ramalingam/">GitHub</a></div></div></footer>
@@ -150,7 +151,7 @@ inspiring += section('guidance', '03', 'Shared engineering practice across teams
 inspiring += section('writing', '04', 'Making architectural reasoning available to others', 'Practitioner writing and community review', sources(
     source('DATAVERSITY', 'Why Observability Is Becoming a Governance Layer for Agentic Data Systems', 'Explains how decision provenance and governance should inform the design and review of autonomous data systems.', OBS, 'Read the article'),
     source('DevOps Institute / PeopleCert', 'The DevOps Standard', 'Contributed expertise and review feedback to the development of this vendor-neutral DevOps book. Acknowledged by name in the published book (PDF page 20).', 'https://www.peoplecert.org/devops-standard', 'Official book page')))
-inspiring += section('mentoring', '05', 'ADPList mentoring recognition', 'Two independently issued recognitions in 2026.', '<div class="wide-document">' + mentor_recognition() + '</div>')
+inspiring += section('mentoring', '05', 'ADPList mentoring recognition', 'Three independently issued recognitions in 2026.', '<div class="wide-document">' + mentor_recognition() + '</div>')
 inspiring += section('recognition', '06', 'Professional recognition', 'An independent award for enterprise AI architecture.', '<div class="wide-document">' + cert('business-mint-enterprise-ai-architect-2026', 'Enterprise AI Architect of the Year 2026', 'Business Mint Nationwide Awards / 7 September 2026', 'Certificate of recognition in the Enterprise AI Architect category. This award provides professional context; the speaking, writing and mentoring records above document contributions to others.') + '</div>')
 inspiring += section('memberships', '07', 'Professional society participation', 'Memberships and fellowships provide additional professional context.', grid(
     cert('ieee-senior-member-letter', 'IEEE Senior Member', 'IEEE', 'Letter recognising elevation to Senior Member grade.'),
