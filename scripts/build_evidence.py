@@ -158,7 +158,7 @@ inspiring += section('memberships', '07', 'Professional society participation', 
     cert('iete-2026-fellow-certificate', 'IETE Fellow', 'Institution of Electronics and Telecommunication Engineers', 'Fellow membership recognition.'))
     + grid(cert('scrs-2026-distinguished-fellow-certificate', 'SCRS Distinguished Fellow', 'Soft Computing Research Society', 'Distinguished Fellow recognition.'),
            cert('sas-sefm-eminent-fellow-2026', 'SAS / SEFM Eminent Fellow', 'Scholars Academic and Scientific Society', 'Eminent Fellow recognition.'))
-    + '<p class="note">Also an ACM member. Professional memberships provide context for participation in the community; the speaking and mentoring evidence above documents the contribution.</p>')
+    + '<p class="note">Also an ACM member and a <a href="assets/certificates/sigma-xi-full-member-2026.pdf">Sigma Xi Full Member (2026)</a>. Professional memberships provide context for participation in the community; the speaking and mentoring evidence above documents the contribution.</p>')
 page('inspiring', 'Inspiring Others', 'Architectural guidance, professional speaking and mentoring, supported by organiser records and community recognition.', [('datatech','DataTech'),('ai4','Ai4'),('guidance','Engineering practice'),('writing','Writing'),('mentoring','Mentoring'),('recognition','Recognition'),('memberships','Memberships')], inspiring)
 
 
