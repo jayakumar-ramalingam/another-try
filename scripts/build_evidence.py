@@ -219,7 +219,7 @@ influence += section('reviews', '03', 'Peer review across international conferen
         cert('amira-2026-reviewer-certificate', 'Autonomous Machines and Intelligent Robotics Applications', 'AMIRA / Peer reviewer', 'Certificate recognising constructive scientific assessment through the conference peer-review process.'),
         cert('temscon-aspac-2026-reviewer-certificate', 'Technology and Engineering Management Society Conference: Asia-Pacific', 'IEEE TEMSCON-ASPAC / Reviewer', 'Certificate from Marwadi University recognising contributions as a conference reviewer.')
     )
-    + note('My review record also includes IEEE GLOBECOM, IECON and IEEE BigData. The certificates above document selected engagements, rather than the total number of papers reviewed.'))
+    )
 influence += section('judging', '04', 'Judging applied innovation', 'Award juries, university projects and hackathons, including HackHers, HackGT and SwampHacks.', grid(
     cert('stevie-2026-technology-excellence-jury-certificate', 'Stevie Awards for Technology Excellence', 'Company & Organization Awards Jury', 'Jury recognition for evaluating entries in the technology excellence programme.'),
     cert('stevie-2026-international-business-awards-chair-certificate', 'International Business Awards', 'New Product & Product Management Awards Jury', 'Certificate of appreciation for judging on the New Product & Product Management Awards Jury.'))
