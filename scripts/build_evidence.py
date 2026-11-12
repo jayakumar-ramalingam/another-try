@@ -2,6 +2,7 @@
 from html import escape
 import json
 from pathlib import Path
+import re
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -83,6 +84,10 @@ def section(id, number, title, description, body):
     compact = id in ('committees', 'reviews')
     if compact:
         body = body.replace('</div><div class="grid">', '')
+    if id == 'reviews':
+        cards = re.findall(r'<article class="evidence">.*?</article>', body, re.S)
+        if len(cards) > 6:
+            body = grid(*cards[:6]) + '<details class="more-evidence"><summary>More peer-review certificates <span>' + str(len(cards) - 6) + ' additional conferences</span></summary>' + grid(*cards[6:]) + '</details>'
     return f'<section class="section{" evidence-compact" if compact else ""}" id="{id}" aria-labelledby="{id}-title"><div class="section-head"><span class="section-number" aria-hidden="true">{number}</span><div><h2 id="{id}-title">{title}</h2><p>{description}</p></div></div>{body}</section>'
 
 

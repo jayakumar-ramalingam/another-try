@@ -50,17 +50,27 @@ dialog[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; heig
 .viewer-controls button:hover, .close:hover { background: var(--soft); }
 .links .official-source { color: var(--green); font-weight: 700; text-decoration-thickness: 2px; }
 .links .local-evidence { color: var(--muted); font-weight: 400; }
-.evidence-compact > .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.evidence-compact > .grid, .more-evidence > .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.more-evidence { margin-top: 24px; border-top: 1px solid var(--line); }
+.more-evidence summary { padding: 18px 0; cursor: pointer; color: var(--green); font-weight: 700; }
+.more-evidence summary span { margin-left: 12px; font-size: 13px; color: var(--muted); font-weight: 400; }
+.more-evidence summary:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+.more-evidence .document { height: 180px; min-height: 180px; padding: 12px; }
+.more-evidence .document img { height: 156px; max-height: 156px; }
+.more-evidence .caption { padding: 18px; }
+.more-evidence h3 { font-size: 18px; }
+.more-evidence .caption p { font-size: 14px; }
+@media print { .more-evidence:not([open]) > .grid { display: grid; } }
 .evidence-compact > .grid .document { height: 180px; min-height: 180px; padding: 12px; }
 .evidence-compact > .grid .document img { height: 156px; max-height: 156px; }
 .evidence-compact > .grid .caption { padding: 18px; }
 .evidence-compact > .grid h3 { font-size: 18px; }
 .evidence-compact > .grid .caption p { font-size: 14px; }
 @media (max-width: 1000px) {
-  .evidence-compact > .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .evidence-compact > .grid, .more-evidence > .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 620px) {
-  .evidence-compact > .grid { grid-template-columns: 1fr; }
+  .evidence-compact > .grid, .more-evidence > .grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 620px) {
   .intro h1 { font-size: 36px; }
