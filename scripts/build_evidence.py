@@ -86,6 +86,8 @@ def section(id, number, title, description, body):
         body = body.replace('</div><div class="grid">', '')
     if id == 'reviews':
         cards = re.findall(r'<article class="evidence">.*?</article>', body, re.S)
+        featured = ['iecon-review-confirmation-excerpt', 'temscon-aspac-2026', 'r10-htc-2026', 'inc4-2026', 'iccubea-2026', 'icetci-2026']
+        cards.sort(key=lambda card: next((rank for rank, stem in enumerate(featured) if stem in card), len(featured)))
         if len(cards) > 6:
             body = grid(*cards[:6]) + '<details class="more-evidence"><summary>More peer-review certificates <span>' + str(len(cards) - 6) + ' additional conferences</span></summary>' + grid(*cards[6:]) + '</details>'
     return f'<section class="section{" evidence-compact" if compact else ""}" id="{id}" aria-labelledby="{id}-title"><div class="section-head"><span class="section-number" aria-hidden="true">{number}</span><div><h2 id="{id}-title">{title}</h2><p>{description}</p></div></div>{body}</section>'
@@ -204,6 +206,7 @@ influence += section('committees', '02', 'Technical Programme Committees at inte
            cert('uemcon-2026-tpc-reviewer-certificate', 'IEEE UEMCON', 'TPC member and reviewer', 'Certificate of appreciation for technical programme committee and reviewer service.', [('Conference organiser', 'https://ieee-uemcon.org/')]))
     + '<h3 id="chairing" class="divider-title">Related conference service: session chairing</h3><div class="wide-document">' + cert('temsmet-2026-session-chair-certificate', 'IEEE TEMSMET', 'Session chair / Hyderabad', 'Certificate recognising session-chair service at the 5th IEEE International Conference on Technology, Engineering, Management for Societal Impact, held 29–31 October 2026.') + '</div>')
 influence += section('reviews', '03', 'Peer review across international conferences', 'More than fifty research papers reviewed, as recorded in my professional contribution history. Selected organiser-issued certificates are shown below.', grid(
+    cert('iecon-review-confirmation-excerpt', 'IEEE IECON', 'IEEE Industrial Electronics Society / Reviewer', 'Organiser confirmations acknowledge four submitted paper reviews.', [('Review confirmation excerpts', 'assets/certificates/iecon-review-confirmation-excerpt.pdf')]),
     cert('r10-htc-2026-reviewer-certificate', 'IEEE Region 10 Humanitarian Technology Conference', 'R10-HTC / Reviewer', 'Organiser recognition of reviewing service.'),
     cert('isemantic-2026-reviewer-certificate', 'International Seminar on Application for Technology of Information and Communication', 'ISemantic / Reviewer', 'Certificate documenting peer-review contribution.'))
     + grid(cert('icetci-2026-reviewer-certificate', 'Emerging Techniques in Computational Intelligence', 'ICETCI / Reviewer', 'Recognition for technical review of conference submissions.'),
