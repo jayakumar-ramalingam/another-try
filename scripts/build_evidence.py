@@ -202,8 +202,23 @@ influence += section('reviews', '03', 'Peer review across international conferen
     cert('r10-htc-2026-reviewer-certificate', 'IEEE Region 10 Humanitarian Technology Conference', 'R10-HTC / Reviewer', 'Organiser recognition of reviewing service.'),
     cert('isemantic-2026-reviewer-certificate', 'International Seminar on Application for Technology of Information and Communication', 'ISemantic / Reviewer', 'Certificate documenting peer-review contribution.'))
     + grid(cert('icetci-2026-reviewer-certificate', 'Emerging Techniques in Computational Intelligence', 'ICETCI / Reviewer', 'Recognition for technical review of conference submissions.'),
-           cert('amlds-2026-reviewer-certificate', 'Applied Machine Learning and Data Science', 'AMLDS / Reviewer', 'Organiser acknowledgement of research evaluation.'))
+           cert('amlds-2026-reviewer-certificate', 'Advanced Machine Learning and Data Science', 'AMLDS / Reviewer', 'Organiser acknowledgement of research evaluation.'))
     + grid(cert('gicite-2026-reviewer-certificate', 'IEEE Germany-India Conference on Innovation, Technology, and Engineering', 'GICITE / Reviewer', 'Organiser-issued certificate recognising peer-review service. The conference is scheduled for November 2026 in Berlin.'))
+    + grid(
+        cert('iceece-2026-reviewer-certificate', 'Electrical, Electronic and Computer Engineering', 'ICEECE / Reviewer', 'Organiser-issued recognition of conference peer-review service.'),
+        cert('icsl-dsga-2026-reviewer-certificate', 'Statistical Learning, Data Science and Generative AI', 'ICSL-DSGA / Reviewer', 'Recognition for contributions to the conference peer-review process.'),
+        cert('inc4-2026-reviewer-certificate', 'Contemporary Computing and Communications', 'IEEE InC4 / Reviewer', 'Reviewer recognition from the conference organised by the IEEE Computer Society Bangalore Chapter at CHRIST University.'),
+        cert('icacecs-2026-reviewer-certificate', 'Advances in Computer Engineering and Communication Systems', 'ICACECS / Reviewer', 'Certificate recognising reviewer contributions to the international conference.'),
+        cert('ariia-2026-reviewer-adaptive-learning-certificate', 'Augmented Reality, Intelligent Systems and Industrial Automation', 'ARIIA / Technical reviewer', 'Two certificates document reviews of adaptive-learning and AI-assisted diagnostic research. Both are available in the preview.', extra=[('Diagnostic AI review certificate', 'assets/certificates/ariia-2026-reviewer-diagnostic-ai-certificate.pdf')], gallery=[('ARIIA: diagnostic AI paper review', 'assets/certificates/ariia-2026-reviewer-diagnostic-ai-certificate-thumb.png')]),
+        cert('stesi-2026-reviewer-certificate', 'Smart Technologies for Energy and Sustainability', 'STESI / Reviewer', 'Certificate acknowledging technical paper review.'),
+        cert('iccubea-2026-reviewer-certificate', 'Computing, Communication, Control and Automation', 'ICCUBEA / Reviewer', 'Reviewer recognition from Pimpri Chinchwad College of Engineering, Pune.'),
+        cert('ce2ct-2026-reviewer-certificate', 'Computer Science, Electrical, Electronics and Communication Technologies', 'CE2CT / Reviewer', 'Certificate of appreciation from Graphic Era Hill University, Bhimtal.'),
+        cert('icoias-2026-reviewer-certificate', 'Intelligent Autonomous Systems', 'ICoIAS / Reviewer', 'Certificate of appreciation for reviewer member contributions.'),
+        cert('icetm-2026-reviewer-certificate', 'Engineering, Technology and Management', 'ICETM / Reviewer', 'Organiser recognition for scholarly review contribution.'),
+        cert('icicacs-2026-reviewer-certificate', 'Integrated Circuits and Communication Systems', 'ICICACS / Reviewer', 'Certificate of appreciation for technical paper review.'),
+        cert('amira-2026-reviewer-certificate', 'Autonomous Machines and Intelligent Robotics Applications', 'AMIRA / Peer reviewer', 'Certificate recognising constructive scientific assessment through the conference peer-review process.'),
+        cert('temscon-aspac-2026-reviewer-certificate', 'Technology and Engineering Management Society Conference: Asia-Pacific', 'IEEE TEMSCON-ASPAC / Reviewer', 'Certificate from Marwadi University recognising contributions as a conference reviewer.')
+    )
     + note('My review record also includes IEEE GLOBECOM, IECON and IEEE BigData. The certificates above document selected engagements, rather than the total number of papers reviewed.'))
 influence += section('judging', '04', 'Judging applied innovation', 'Award juries, university projects and hackathons, including HackHers, HackGT and SwampHacks.', grid(
     cert('stevie-2026-technology-excellence-jury-certificate', 'Stevie Awards for Technology Excellence', 'Company & Organization Awards Jury', 'Jury recognition for evaluating entries in the technology excellence programme.'),
