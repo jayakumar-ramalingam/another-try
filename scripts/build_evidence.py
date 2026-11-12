@@ -14,7 +14,7 @@ def esc(value):
 
 
 def links(*items):
-    return '<div class="links">' + ''.join(f'<a href="{esc(url)}">{esc(label)}</a>' for label, url in items) + '</div>'
+    return '<div class="links">' + ''.join(f'<a class="{"official-source" if url.startswith("https://") else "local-evidence"}" href="{esc(url)}">{esc(label)}</a>' for label, url in items) + '</div>'
 
 
 def image(src, alt, eager=False):
@@ -80,7 +80,10 @@ def note(text):
 
 
 def section(id, number, title, description, body):
-    return f'<section class="section" id="{id}" aria-labelledby="{id}-title"><div class="section-head"><span class="section-number" aria-hidden="true">{number}</span><div><h2 id="{id}-title">{title}</h2><p>{description}</p></div></div>{body}</section>'
+    compact = id in ('committees', 'reviews')
+    if compact:
+        body = body.replace('</div><div class="grid">', '')
+    return f'<section class="section{" evidence-compact" if compact else ""}" id="{id}" aria-labelledby="{id}-title"><div class="section-head"><span class="section-number" aria-hidden="true">{number}</span><div><h2 id="{id}-title">{title}</h2><p>{description}</p></div></div>{body}</section>'
 
 
 def facts(*items):
