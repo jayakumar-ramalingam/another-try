@@ -52,6 +52,8 @@ def evidence(title, issuer, caption, src, original=None, extra=(), photo=False, 
 
 
 def cert(stem, title, issuer, caption, extra=(), gallery=()):
+    if stem in ('iecon-review-confirmation-excerpt', 'globecom-ciss-confirmation-excerpt'):
+        return f'<article class="evidence highlighted"><div class="caption"><p class="eyebrow">{esc(issuer)}</p><h3>{esc(title)}</h3><p>{caption}</p>{links(("Review confirmation", f"assets/certificates/{stem}.pdf"))}</div></article>'
     base = ROOT / 'assets/certificates'
     thumbnails = list(base.glob(stem + '-thumb.*'))
     src = thumbnails[0] if thumbnails else base / (stem + '.jpg')
@@ -104,7 +106,7 @@ def section(id, number, title, description, body):
         featured = ['iecon-review-confirmation-excerpt', 'globecom-ciss-confirmation-excerpt', 'temscon-aspac-2026', 'r10-htc-2026', 'amira-2026', 'icoias-2026']
         cards.sort(key=lambda card: next((rank for rank, stem in enumerate(featured) if stem in card), len(featured)))
         if len(cards) > 6:
-            body = grid(*cards[:6]) + '<details class="more-evidence"><summary>More peer-review certificates <span>' + str(len(cards) - 6) + ' additional conferences</span></summary>' + grid(*cards[6:]) + '</details>'
+            body = '<div class="grid review-confirmations">' + ''.join(cards[:2]) + '</div>' + grid(*cards[2:6]) + '<details class="more-evidence"><summary>More peer-review certificates <span>' + str(len(cards) - 6) + ' additional conferences</span></summary>' + grid(*cards[6:]) + '</details>'
         body = links(('Web of Science profile · QSP-8686-2026', 'https://www.webofscience.com/wos/author/record/QSP-8686-2026')) + body
     return f'<section class="section{" evidence-compact" if compact else ""}" id="{id}" aria-labelledby="{id}-title"><div class="section-head"><span class="section-number" aria-hidden="true">{number}</span><div><h2 id="{id}-title">{title}</h2><p>{description}</p></div></div>{body}</section>'
 
@@ -224,7 +226,7 @@ influence += section('committees', '02', 'Technical Programme Committees at inte
            cert('uemcon-2026-tpc-reviewer-certificate', 'IEEE UEMCON', 'TPC member and reviewer', 'Certificate of appreciation for technical programme committee and reviewer service.', [('Conference organiser', 'https://ieee-uemcon.org/')]))
     + '<h3 id="chairing" class="divider-title">Related conference service: session chairing</h3><div class="wide-document">' + cert('temsmet-2026-session-chair-certificate', 'IEEE TEMSMET', 'Session chair / Hyderabad', 'Certificate recognising session-chair service at the 5th IEEE International Conference on Technology, Engineering, Management for Societal Impact, held 29–31 October 2026.') + '</div>')
 influence += section('reviews', '03', 'Peer review across international conferences', 'More than fifty research papers reviewed, as recorded in my professional contribution history. Selected organiser-issued certificates are shown below.', grid(
-    cert('globecom-ciss-confirmation-excerpt', 'IEEE GLOBECOM', 'CISS Symposium / Reviewer', 'Three organiser confirmations acknowledge completed reviews for the Communication and Information Systems Security Symposium. The preview is a correspondence excerpt, not a certificate.'),
+    cert('globecom-ciss-confirmation-excerpt', 'IEEE GLOBECOM', 'CISS Symposium / Reviewer', 'Three completed reviews for the Communication and Information Systems Security Symposium.'),
     cert('iecon-review-confirmation-excerpt', 'IEEE IECON', 'IEEE Industrial Electronics Society / Reviewer', 'Organiser confirmations acknowledge four submitted paper reviews.', [('Review confirmation excerpts', 'assets/certificates/iecon-review-confirmation-excerpt.pdf')]),
     cert('r10-htc-2026-reviewer-certificate', 'IEEE Region 10 Humanitarian Technology Conference', 'R10-HTC / Reviewer', 'Organiser recognition of reviewing service.'),
     cert('isemantic-2026-reviewer-certificate', 'International Seminar on Application for Technology of Information and Communication', 'ISemantic / Reviewer', 'Certificate documenting peer-review contribution.'))
