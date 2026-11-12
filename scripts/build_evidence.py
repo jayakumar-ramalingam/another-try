@@ -53,13 +53,14 @@ def mentor_recognition():
         ('adplist-top-50-data-engineering-mentor-jul-sep-2026', 'Top 50 Data Engineering Mentor, July-September 2026'),
         ('adplist-top-1-percent-mentor-2026', 'Top 1% Mentor in Engineering, September 2026'),
         ('adplist-top-1-percent-mentor-oct-2026', 'Top 1% Mentor in Engineering, October 2026'),
+        ('adplist-1000-mentorship-minutes', '1,000 mentorship minutes'),
     ]
     documents = []
     for stem, title in items:
         original = f'assets/certificates/{stem}.pdf'
         thumb = f'assets/certificates/{stem}-thumb.png'
         documents.append(f'<div class="document"><a href="{original}" data-preview="{esc(title)}" aria-label="Enlarge {esc(title)}">{image(thumb, title)}</a></div>')
-    return '<article class="evidence"><div class="paired-documents">' + ''.join(documents) + '</div><div class="caption"><p class="eyebrow">ADPList</p><h3>Mentoring recognition</h3><p>ADPList recognised my Data Engineering mentorship in two quarterly periods and awarded Top 1% Mentor in Engineering recognition in both September and October.</p>' + links(('Public mentor profile', 'https://adplist.org/mentors/jayakumar-ramalingam'), ('April-June certificate', f'assets/certificates/{items[0][0]}.pdf'), ('July-September certificate', f'assets/certificates/{items[1][0]}.pdf'), ('September Top 1% certificate', f'assets/certificates/{items[2][0]}.pdf'), ('October Top 1% certificate', f'assets/certificates/{items[3][0]}.pdf')) + '</div></article>'
+    return '<article class="evidence"><div class="paired-documents">' + ''.join(documents) + '</div><div class="caption"><p class="eyebrow">ADPList</p><h3>Mentoring recognition</h3><p>ADPList recognised my Data Engineering mentorship, awarded Top 1% Mentor in Engineering recognition, and certified the completion of 1,000 mentorship minutes.</p>' + links(('Public mentor profile', 'https://adplist.org/mentors/jayakumar-ramalingam'), ('April-June certificate', f'assets/certificates/{items[0][0]}.pdf'), ('July-September certificate', f'assets/certificates/{items[1][0]}.pdf'), ('September Top 1% certificate', f'assets/certificates/{items[2][0]}.pdf'), ('October Top 1% certificate', f'assets/certificates/{items[3][0]}.pdf'), ('1,000-minute milestone', f'assets/certificates/{items[4][0]}.pdf')) + '</div></article>'
 
 
 def grid(*items):
@@ -152,7 +153,7 @@ inspiring += section('guidance', '03', 'Shared engineering practice across teams
 inspiring += section('writing', '04', 'Making architectural reasoning available to others', 'Practitioner writing and community review', sources(
     source('DATAVERSITY', 'Why Observability Is Becoming a Governance Layer for Agentic Data Systems', 'Explains how decision provenance and governance should inform the design and review of autonomous data systems.', OBS, 'Read the article'),
     source('DevOps Institute / PeopleCert', 'The DevOps Standard', 'Contributed expertise and review feedback to the development of this vendor-neutral DevOps book. Acknowledged by name in the published book (PDF page 20).', 'https://www.peoplecert.org/devops-standard', 'Official book page')))
-inspiring += section('mentoring', '05', 'ADPList mentoring recognition', 'Four independently issued recognitions.', '<div class="wide-document">' + mentor_recognition() + '</div>')
+inspiring += section('mentoring', '05', 'ADPList mentoring recognition', 'Mentoring recognition and a 1,000-minute milestone.', '<div class="wide-document">' + mentor_recognition() + '</div>')
 inspiring += section('recognition', '06', 'Professional recognition', 'An independent award for enterprise AI architecture.', '<div class="wide-document">' + cert('business-mint-enterprise-ai-architect-2026', 'Enterprise AI Architect of the Year 2026', 'Business Mint Nationwide Awards / 7 September 2026', 'Certificate of recognition in the Enterprise AI Architect category. This award provides professional context; the speaking, writing and mentoring records above document contributions to others.') + '</div>')
 inspiring += section('memberships', '07', 'Professional society participation', 'Memberships and fellowships provide additional professional context.', grid(
     cert('ieee-senior-member-letter', 'IEEE Senior Member', 'IEEE', 'Letter recognising elevation to Senior Member grade.'),
