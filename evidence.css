@@ -60,6 +60,12 @@ dialog[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; heig
 .more-evidence .caption { padding: 18px; }
 .more-evidence h3 { font-size: 18px; }
 .more-evidence .caption p { font-size: 14px; }
+.highlighted .caption { order: -1; border-bottom: 1px solid var(--line); }
+.highlighted .document { border-bottom: 0; }
+.highlighted .caption h3 { color: var(--green); font-size: 22px; }
+.viewer-image [hidden] { display: none; }
+.viewer-status { text-align: center; color: var(--muted); margin: 12px; }
+.viewer-retry { padding: 12px 18px; min-height: 44px; background: white; color: var(--green); border: 1px solid var(--line); border-radius: 4px; cursor: pointer; }
 @media print { .more-evidence:not([open]) > .grid { display: grid; } }
 .evidence-compact > .grid .document { height: 180px; min-height: 180px; padding: 12px; }
 .evidence-compact > .grid .document img { height: 156px; max-height: 156px; }

@@ -3,7 +3,7 @@ from html import escape
 import json
 from pathlib import Path
 import re
-from PIL import Image
+from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = [('innovation', 'Invention & Innovation'), ('inspiring', 'Inspiring Others'),
@@ -19,9 +19,21 @@ def links(*items):
 
 
 def image(src, alt, eager=False):
-    with Image.open(ROOT / src) as img:
-        width, height = img.size
-    return f'<img src="{esc(src)}" alt="{esc(alt)}" width="{width}" height="{height}" loading="{"eager" if eager else "lazy"}" decoding="async">'
+    source = ROOT / src
+    folder = ROOT / 'assets/previews'
+    folder.mkdir(exist_ok=True)
+    variants = []
+    with Image.open(source) as original:
+        original = ImageOps.exif_transpose(original)
+        width, height = original.size
+        for size in (480, 960):
+            target = folder / (source.stem + f'-{size}.webp')
+            if not target.exists() or target.stat().st_mtime < source.stat().st_mtime:
+                thumb = original.copy()
+                thumb.thumbnail((size, size), Image.Resampling.LANCZOS)
+                thumb.save(target, 'WEBP', quality=85, method=6)
+            variants.append(str(target.relative_to(ROOT)))
+    return f'<img src="{esc(variants[0])}" srcset="{esc(variants[0])} 480w, {esc(variants[1])} 960w" sizes="(max-width: 620px) 90vw, (max-width: 1000px) 44vw, 400px" data-full-src="{esc(src)}" alt="{esc(alt)}" width="{width}" height="{height}" loading="{"eager" if eager else "lazy"}" decoding="async">'
 
 
 def evidence(title, issuer, caption, src, original=None, extra=(), photo=False, gallery=(), preview_class=''):
@@ -30,7 +42,8 @@ def evidence(title, issuer, caption, src, original=None, extra=(), photo=False, 
     gallery_items.extend({'src': item_src, 'href': item_src, 'title': item_title} for item_title, item_src in gallery)
     gallery_data = f' data-gallery="{esc(json.dumps(gallery_items))}"' if gallery else ''
     gallery_count = f'<span class="media-count" aria-hidden="true">{len(gallery_items)} images</span>' if gallery else ''
-    return f'''<article class="evidence">
+    highlight = ' highlighted' if title in ('IEEE IECON', 'IEEE GLOBECOM', 'IEEE BigData') else ''
+    return f'''<article class="evidence{highlight}">
 <div class="document {'photo' if photo else ''} {esc(preview_class)}"><a href="{esc(original)}" data-preview="{esc(title)}"{gallery_data} aria-label="Enlarge {esc(title)}">{image(src, title)}{gallery_count}</a></div>
 <div class="caption"><p class="eyebrow">{esc(issuer)}</p><h3>{esc(title)}</h3><p>{caption}</p>
 {links(*extra, ('Original image' if original == src else 'Original document', original))}</div></article>'''
@@ -85,7 +98,7 @@ def section(id, number, title, description, body):
     if compact:
         body = body.replace('</div><div class="grid">', '')
     if id == 'reviews':
-        cards = re.findall(r'<article class="evidence">.*?</article>', body, re.S)
+        cards = re.findall(r'<article class="evidence(?: highlighted)?">.*?</article>', body, re.S)
         featured = ['iecon-review-confirmation-excerpt', 'globecom-ciss-confirmation-excerpt', 'temscon-aspac-2026', 'r10-htc-2026', 'amira-2026', 'icoias-2026']
         cards.sort(key=lambda card: next((rank for rank, stem in enumerate(featured) if stem in card), len(featured)))
         if len(cards) > 6:
@@ -118,6 +131,7 @@ def page(slug, title, intro, sections, body, home=False):
 <footer class="footer"><div class="wrap"><p>&copy; 2026 Jayakumar Ramalingam</p><div><a href="https://www.linkedin.com/in/jayakumarramalingam/">LinkedIn</a><a href="https://orcid.org/0009-0007-9823-3097">ORCID</a><a href="https://github.com/jayakumar-ramalingam/">GitHub</a></div></div></footer>
 <dialog id="evidence-viewer" aria-labelledby="viewer-title"><div class="viewer-head"><p id="viewer-title">Evidence</p><button class="close" type="button" aria-label="Close preview" title="Close preview">&times;</button></div><div class="viewer-image"><img alt=""></div><div class="viewer-actions"><div class="viewer-controls" hidden><button class="previous" type="button" aria-label="Previous image" title="Previous image">&#8592;</button><span class="viewer-count"></span><button class="next" type="button" aria-label="Next image" title="Next image">&#8594;</button></div><a class="viewer-link" href="#">Open original evidence</a></div></dialog>
 </body></html>'''
+    document = document.replace('evidence.css?v=20261006', 'evidence.css?v=20261112').replace('evidence.js?v=20261005d', 'evidence.js?v=20261112')
     (ROOT / f'{slug}.html').write_text(document)
 
 
