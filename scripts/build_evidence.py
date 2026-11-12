@@ -32,8 +32,10 @@ def image(src, alt, eager=False):
                 thumb = original.copy()
                 thumb.thumbnail((size, size), Image.Resampling.LANCZOS)
                 thumb.save(target, 'WEBP', quality=85, method=6)
-            variants.append(str(target.relative_to(ROOT)))
-    return f'<img src="{esc(variants[0])}" srcset="{esc(variants[0])} 480w, {esc(variants[1])} 960w" sizes="(max-width: 620px) 90vw, (max-width: 1000px) 44vw, 400px" data-full-src="{esc(src)}" alt="{esc(alt)}" width="{width}" height="{height}" loading="{"eager" if eager else "lazy"}" decoding="async">'
+            with Image.open(target) as preview:
+                variants.append((str(target.relative_to(ROOT)), preview.width))
+    candidates = ', '.join(f'{esc(path)} {pixels}w' for path, pixels in variants)
+    return f'<img src="{esc(variants[0][0])}" srcset="{candidates}" sizes="(max-width: 620px) 90vw, (max-width: 1000px) 44vw, 400px" data-full-src="{esc(src)}" alt="{esc(alt)}" width="{width}" height="{height}" loading="{"eager" if eager else "lazy"}" decoding="async">'
 
 
 def evidence(title, issuer, caption, src, original=None, extra=(), photo=False, gallery=(), preview_class=''):
