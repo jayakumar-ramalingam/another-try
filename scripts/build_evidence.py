@@ -15,6 +15,7 @@ def esc(value):
 
 
 def links(*items):
+    items = [('Official speaker profile', 'https://ai4.com/speakers/jayakumar-ramalingam/') if url == 'https://ai4.io/speakers/' else (label, url) for label, url in items]
     return '<div class="links">' + ''.join(f'<a class="{"official-source" if url.startswith("https://") else "local-evidence"}" href="{esc(url)}">{esc(label)}</a>' for label, url in items) + '</div>'
 
 
@@ -222,7 +223,7 @@ influence = section('speaking', '01', 'Keynote and conference speaking', 'Produc
         evidence('Simply Cyber Con', 'Folly Beach, South Carolina / Speaker', 'Speaking engagement at the cybersecurity community conference. Event photograph and badge.', 'assets/events/simply-cyber-con-photo.jpeg', extra=[('Official event and programme', 'https://simplycybercon.org/')], photo=True, gallery=[('Simply Cyber Con event badge', 'assets/events/simply-cyber-con-badge.jpeg')])
     )
     + sources(
-        source('Applied AI Summit / Speaker', 'Applied AI Summit', 'Speaking contribution to the online summit for applied AI professionals. Listed in the organiser’s speaker directory.', 'https://appliedaisummit.org/', 'Official speaker directory'),
+        source('Applied AI Summit / Speaker', 'Real-Time AI Feature Pipelines: From Clickstream to Inference in Production', 'A practical architecture for streaming ingestion, feature derivation, model inference, observability and fallback behaviour in production AI systems.', 'https://appliedaisummit.org/real-time-ai-feature-pipelines-from-clickstream-to-inference-in-production/', 'Official session and speaker profile'),
         source('Voxel51 / Speaker', 'Testing AI Systems in Production: Data Quality, Drift, and Model Evaluation', 'A talk at the AI, ML and Computer Vision Meetup on production data quality, drift detection, model evaluation and rollback analysis.', 'https://voxel51.com/events/ai-ml-and-computer-vision-meetup-october-15-2026', 'Official session and speaker listing')
     ))
 influence += section('committees', '02', 'Technical Programme Committees at international conferences', 'Organiser-issued certificates document my TPC appointments and associated paper reviews.', grid(
